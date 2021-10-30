@@ -22,7 +22,7 @@ git clone https://github.com/xuandung38/MEMP.git
 ```
 2 - Enter the project folder, give permissions to the install.sh file.
 ```
-cd ~/MEMP
+cd MEMP
 sudo chmod +x install.sh
 ```
 
