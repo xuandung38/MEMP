@@ -1,7 +1,7 @@
-## MEMP for macOS Apple Silicon
+## MEMP for Macs with Apple silicon chips 
 
 ## Overview
-This script is written using the shell, in order to quickly deploy "LEMP" for AppleSilicon Bigsur, Monterey.
+This script is written using the shell, in order to quickly deploy "LEMP" for Macs with Apple silicon chips (os: Bigsur, Monterey).
 
 `M` - MacOS
 
