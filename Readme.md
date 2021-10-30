@@ -3,16 +3,16 @@
 ## Overview
 This script is written using the shell, in order to quickly deploy "LEMP" for AppleSilicon Bigsur, Monterey.
 
-M - MacOS
+`M` - MacOS
 
-E - Nginx
+`E` - Nginx
 
-M - Mysql
+`M` - Mysql
 
-P - PHP
+`P` - PHP
 
 ## How to setup
-**NOTE**  Require finish setting up command line developer tools before.
+**NOTE:**  Require finish setting up command line developer tools before.
 
 1 - Pull source code
 - Clone MEMP repository inside `Desktop`
