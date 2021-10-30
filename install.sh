@@ -30,7 +30,9 @@ install_dependencies() {
     else
         echo "${green}Homebrew are installed.${txtreset}"
     fi
-
+    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/it/.zprofile
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+    
     echo "${yellow}Update homebrew.${txtreset}"
     brew doctor
     brew update && brew upgrade
