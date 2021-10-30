@@ -20,6 +20,8 @@ http {
 
     server {
         listen 80;
+        listen 443 ssl http2;
+        listen [::]:443 ssl http2;
         server_name  localhost;
 
         charset utf-8;
@@ -37,6 +39,11 @@ http {
         location = /50x.html {
             root   html;
         }
+
+        ssl_certificate      ssl/localhost.crt;
+        ssl_certificate_key  ssl/localhost.key;
+        ssl_ciphers          HIGH:!aNULL:!MD5;
+    
         
         include php/php.conf;
     }

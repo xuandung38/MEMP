@@ -193,6 +193,7 @@ config()
 
     sudo cat ./zsh.temp > $HOME/.zshrc
     sudo mkdir -p $HOME/WordSpaces
+    sudo chown $USER:staff $HOME/WordSpaces
     sudo mkdir -p $HOME/WordSpaces/Webs
 
     echo "${boldgreen}Config local server done!${txtreset}"
