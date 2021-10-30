@@ -6,7 +6,7 @@
 # Helpers:
 txtbold=$(tput bold)
 boldyellow=${txtbold}$(tput setaf 3)
-boldgreen=${txtbold}$(tput setaf 2)ư
+boldgreen=${txtbold}$(tput setaf 2)
 yellow=$(tput setaf 3)
 green=$(tput setaf 2)
 txtreset=$(tput sgr0)
@@ -18,7 +18,7 @@ install_dependencies() {
     str="xcode-select: note: install requested for command line developer tools"
     while [[ "$check" == "$str" ]];
     do
-      osascript -e 'tell app "System Events" to display dialog "xcode command-line tools missing." buttons "OK" default button 1 with title "xcode command-line tools"'
+      osascript -e 'tell app "System Events" to display dialog "Warning: Xcode Command Line Tools Missing" buttons "OK" default button 1 with title "MEMP dependencies missing"'
       exit;  
     done
 
@@ -37,6 +37,17 @@ install_dependencies() {
     brew doctor
     brew update && brew upgrade
 
+    which -s git
+    if [[ $? != 0 ]] ; then
+        echo "${boldyellow}Install Git!${txtreset}"
+        brew install git
+    fi
+
+    which -s code
+    if [[ $? != 0 ]] ; then
+        echo "${boldyellow}Install Visual Studio Code!${txtreset}"
+        brew install --cask visual-studio-code
+    fi
 }
 
 install_mysql() {
@@ -52,7 +63,7 @@ install_mysql() {
         echo "${boldgreen}Mysql installed and running.${txtreset}"
         
     else
-        echo "${green}Mysql are installed.${txtreset}"
+        echo "${green}Mysql already installed.${txtreset}"
     fi
 
 }
@@ -85,23 +96,23 @@ install_php() {
     echo "${yellow}Install Xdebug.${txtreset}"
     pecl uninstall -r xdebug 
     pecl install xdebug
-    sudo echo "[xdebug]
-    zend_extension="xdebug.so"
-    xdebug.mode=debug
-    xdebug.client_port=9003
-    xdebug.idekey=PHPSTORM
-    ;xdebug.start_with_request = yes" >> "/opt/homebrew/etc/php/7.4/php.ini"
+    sudo echo "
+[xdebug]
+xdebug.mode=debug
+xdebug.client_port=9003
+xdebug.idekey=PHPSTORM
+;xdebug.start_with_request = yes" >> "/opt/homebrew/etc/php/7.4/php.ini"
 
     brew link --overwrite --force php@8.0
     pecl uninstall -r xdebug 
     pecl install xdebug
-
-    sudo echo "[xdebug]
-    zend_extension="xdebug.so"
-    xdebug.mode=debug
-    xdebug.client_port=9003
-    xdebug.idekey=PHPSTORM
-    ;xdebug.start_with_request = yes" >> "/opt/homebrew/etc/php/8.0/php.ini"
+ 
+    sudo echo "
+[xdebug]
+xdebug.mode=debug
+xdebug.client_port=9003
+xdebug.idekey=PHPSTORM
+;xdebug.start_with_request = yes" >> "/opt/homebrew/etc/php/8.0/php.ini"
 
 
 }
@@ -115,13 +126,13 @@ install_dnsmasq() {
         brew install dnsmasq
         sudo echo 'address=/.web/127.0.0.1' > /opt/homebrew/etc/dnsmasq.conf
         sudo mkdir -v /etc/resolver
-        sudo echo "nameserver 127.0.0.1" > /etc/resolver/web
+        sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/web'
         sudo echo "${boldgreen}Dnsmasq installed and running.${txtreset}"
 
         sudo brew services start dnsmasq
         
     else
-        echo "${green}Dnsmasq are installed.${txtreset}"
+        echo "${green}Dnsmasq already installed.${txtreset}"
     fi
 
 }
@@ -136,7 +147,7 @@ install_nginx() {
         sudo brew services start nginx
         echo "${boldgreen}Nginx installed and running.${txtreset}"
     else
-        echo "${green}Nginx are installed.${txtreset}"
+        echo "${green}Nginx already installed.${txtreset}"
     fi
 }
 
@@ -152,7 +163,7 @@ config()
         brew install mkcert
         brew install nss
     else
-        echo "${green}Mkcert are installed.${txtreset}"
+        echo "${green}Mkcert already installed.${txtreset}"
     fi
 
     sudo mkcert -install
@@ -162,23 +173,45 @@ config()
     sudo mkdir -p /opt/homebrew/etc/nginx/php
     sudo mkdir -p /opt/homebrew/etc/nginx/servers
     sudo mkdir -p /opt/homebrew/etc/nginx/ssl
-
+    
+    sudo mkcert -key-file /opt/homebrew/etc/nginx/ssl/localhost.key -cert-file /opt/homebrew/etc/nginx/ssl/localhost.crt "localhost"
+    sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain /opt/homebrew/etc/nginx/ssl/localhost.crt
+   
     sudo cp /opt/homebrew/etc/nginx/nginx.conf /opt/homebrew/etc/nginx/nginx.conf.bak
 
     sudo cp -r ./nginx/ /opt/homebrew/etc/nginx
 
-    sudo cp ./nginx.temp /opt/homebrew/etc/nginx/nginx2.conf
+    sudo cp ./nginx.temp /opt/homebrew/etc/nginx/nginx.conf
 
-    sed -i '' "s:{{user}}:$USER:" /opt/homebrew/etc/nginx/nginx2.conf
+    sed -i '' "s:{{user}}:$USER:" /opt/homebrew/etc/nginx/nginx.conf
 
-    sudo cat ./zsh.temp >> $HOME/.zshrc
-    
+    sudo brew services restart nginx
+
+    echo "${boldgreen}Config ZSH!${txtreset}"
+
+    sudo cp $HOME/.zshrc $HOME/.zshrc.bak
+
+    sudo cat ./zsh.temp > $HOME/.zshrc
+    sudo mkdir -p $HOME/WordSpaces
+    sudo mkdir -p $HOME/WordSpaces/Webs
+
     echo "${boldgreen}Config local server done!${txtreset}"
+
+
+    code /opt/homebrew/etc/nginx
+
+    open $HOME/WordSpaces
+
+    open https://localhost
 }
 
 install_dependencies
-# install_php
-# install_mysql
+install_php
+install_mysql
 install_nginx
 install_dnsmasq
 config
+
+echo "${boldgreen}Install MEMP Server Done!${txtreset}"
+echo
+echo "${yellow}Please Restart Terminal and type ${boldgreen}memp_help${txtreset}${yellow} to know how to use Quick Command!${txtreset}"
