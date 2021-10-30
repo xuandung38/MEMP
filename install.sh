@@ -13,19 +13,20 @@ txtreset=$(tput sgr0)
 
 
 install_dependencies() {
-    echo "${yellow}Getting dependencies.${txtreset}"
-    if type xcode-select >&- && xpath=$( xcode-select --print-path ) &&
-    test -d "${xpath}" && test -x "${xpath}" ; then
-    echo "${green}Command Line Tools are installed.${txtreset}"
-    else
-    xcode-select --install
-    fi
+    check=$((xcode-\select --install) 2>&1)
+    echo $check
+    str="xcode-select: note: install requested for command line developer tools"
+    while [[ "$check" == "$str" ]];
+    do
+      osascript -e 'tell app "System Events" to display dialog "xcode command-line tools missing." buttons "OK" default button 1 with title "xcode command-line tools"'
+      exit;  
+    done
 
     which -s brew
     if [[ $? != 0 ]] ; then
         # Install Homebrew
         echo "${yellow}Install homebrew.${txtreset}"
-        ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     else
         echo "${green}Homebrew are installed.${txtreset}"
     fi
@@ -128,7 +129,6 @@ install_nginx() {
     if [[ $? != 0 ]] ; then
         # Install nginx
         echo "${yellow}Install nginx.${txtreset}"
-        brew tap homebrew/nginx
         brew install nginx
 
         sudo brew services start nginx
@@ -143,13 +143,12 @@ config()
     
     echo "${yellow}Config local server.${txtreset}"
   
-    which -s brew
+    which -s mkcert
     if [[ $? != 0 ]] ; then
-        # Install Homebrew
+        # Install mkcert
         echo "${yellow}Install mkcert.${txtreset}"  
         brew install mkcert
         brew install nss
-        
     else
         echo "${green}Mkcert are installed.${txtreset}"
     fi
