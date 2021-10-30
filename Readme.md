@@ -11,6 +11,14 @@ This script is written using the shell, in order to quickly deploy "LEMP" for Ma
 
 `P` - PHP
 
+
+##  Main function:
+
+- Create vhost quickly with ssl and wildcard ssl for local domain, custom domain name, project path and php version of arbitrary project.
+- Switch default PHP version with just 1 command line.
+- Start, Stop, and Restart services quickly.
+- View the list of available vhosts.
+
 ## How to setup
 **NOTE:**  Require finish setting up command line developer tools before.
 
