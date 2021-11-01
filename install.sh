@@ -207,17 +207,17 @@ config()
     sudo cp $HOME/.zshrc $HOME/.zshrc.bak
 
     sudo cat ./zsh.temp > $HOME/.zshrc
-    sudo mkdir -p $HOME/WordSpaces
-    sudo chown $USER:staff $HOME/WordSpaces
-    sudo mkdir -p $HOME/WordSpaces/Webs
-    sudo chown $USER:staff $HOME/WordSpaces/Web
+    sudo mkdir -p $HOME/WorkSpaces
+    sudo chown $USER:staff $HOME/WorkSpaces
+    sudo mkdir -p $HOME/WorkSpaces/Webs
+    sudo chown $USER:staff $HOME/WorkSpaces/Web
 
     echo "${boldgreen}Config local server done!${txtreset}"
 
 
     code /opt/homebrew/etc/nginx
 
-    open $HOME/WordSpaces
+    open $HOME/WorkSpaces
 
     open https://localhost
 }
