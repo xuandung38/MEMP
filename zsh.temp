@@ -20,9 +20,13 @@ alias nginx.start='sudo brew services start nginx'
 alias nginx.stop='sudo brew services stop nginx'
 alias nginx.restart='sudo brew services restart nginx'
 
-alias mysql.start='brew services start mysql'
-alias mysql.stop='brew services stop mysql'
-alias mysql.restart='brew services restart mysql'
+alias dnsmasq.start='sudo brew services start dnsmasq'
+alias dnsmasq.stop='sudo brew services stop dnsmasq'
+alias dnsmasq.restart='sudo brew services restart dnsmasq'
+
+alias mysql.start='mysql.server start'
+alias mysql.stop='mysql.server stop'
+alias mysql.restart='mysql.server restart'
 
 alias php74.start='sudo brew services start php@7.4'
 alias php74.stop='sudo brew services stop php@7.4'
@@ -32,8 +36,8 @@ alias php8.start='sudo brew services start php@8.0'
 alias php8.stop='sudo brew services stop php@8.0'
 alias php8.restart='sudo brew services restart php@8.0'
 
-alias memp.stop='mysql.stop && nginx.stop && php74.stop && php8.stop'
-alias memp.start='mysql.start && nginx.start && php74.start && php8.start'
+alias memp.stop='mysql.stop && nginx.stop && php74.stop && php8.stop && dnsmasq.stop'
+alias memp.start='mysql.start && nginx.start && php74.start && php8.start && dnsmasq.start'
 alias memp.restart='memp.stop && memp.start'
 
 alias pa='php artisan'
@@ -138,7 +142,7 @@ function memp_help()
    echo "${yellow}          And root dir is $HOME/Wordspaces/Webs/laravel/public${txtreset}"
    echo "${yellow}          And and php is version 8.0${txtreset}"
    echo
-   echo "${boldgreen}vhost hxd laravel/public 8${txtreset}"
+   echo "${boldgreen}vhost hxd laravel/public 8.0${txtreset}"
    echo
    echo
 }

@@ -58,8 +58,14 @@ install_mysql() {
         echo "${yellow}Install mysql.${txtreset}"
         brew install mysql
 
-        sudo brew services start mysql
+        mysql.server start
         
+        echo "${boldyellow}Config Mysql.${txtreset}"
+
+        mysql_secure_installation
+        
+        mysql.server restart
+
         echo "${boldgreen}Mysql installed and running.${txtreset}"
         
     else
@@ -167,6 +173,15 @@ config()
     fi
 
     sudo mkcert -install
+  
+    which -s composer
+    if [[ $? != 0 ]] ; then
+        # Install composer
+        echo "${yellow}Install composer.${txtreset}"  
+        brew install composer
+    else
+        echo "${green}Composer already installed.${txtreset}"
+    fi
 
     sudo chmod -R 775 /opt/homebrew/etc/nginx
     sudo mkdir -p /opt/homebrew/etc/nginx/default
@@ -195,6 +210,7 @@ config()
     sudo mkdir -p $HOME/WordSpaces
     sudo chown $USER:staff $HOME/WordSpaces
     sudo mkdir -p $HOME/WordSpaces/Webs
+    sudo chown $USER:staff $HOME/WordSpaces/Web
 
     echo "${boldgreen}Config local server done!${txtreset}"
 
