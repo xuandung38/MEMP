@@ -58,13 +58,13 @@ install_mysql() {
         echo "${yellow}Install mysql.${txtreset}"
         brew install mysql
 
-        mysql.server start
+        brew services start mysql
         
         echo "${boldyellow}Config Mysql.${txtreset}"
 
         mysql_secure_installation
         
-        mysql.server restart
+        brew services restart mysql
 
         echo "${boldgreen}Mysql installed and running.${txtreset}"
         
@@ -157,6 +157,20 @@ install_nginx() {
     fi
 }
 
+install_redis() {
+    which -s redis  
+    if [[ $? != 0 ]] ; then
+        # Install redis
+        echo "${yellow}Install Redis.${txtreset}"
+        brew install redis
+
+        sudo brew services start redis
+        echo "${boldgreen}Redis installed and running.${txtreset}"
+    else
+        echo "${green}Redis already installed.${txtreset}"
+    fi
+}
+
 config()
 {
     
@@ -227,6 +241,7 @@ install_php
 install_mysql
 install_nginx
 install_dnsmasq
+install_redis
 config
 
 echo "${boldgreen}Install MEMP Server Done!${txtreset}"
