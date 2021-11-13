@@ -171,8 +171,7 @@ install_redis() {
     fi
 }
 
-config()
-{
+config() {
     
     echo "${yellow}Config local server.${txtreset}"
   
