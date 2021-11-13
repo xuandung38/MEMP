@@ -50,21 +50,21 @@ function phpv() {
 }
 
 function vhost() {
-   
+
     sudo cp /opt/homebrew/etc/nginx/default/default.temp /opt/homebrew/etc/nginx/servers/$1.conf
-    
+
     sed -i '' "s:{{host}}:$1:" /opt/homebrew/etc/nginx/servers/$1.conf
 
     if [ "$2" ]; then
-        sed  -i '' "s:{{root}}:$HOME/WorkSpaces/Webs/$2:" /opt/homebrew/etc/nginx/servers/$1.conf
+        sed -i '' "s:{{root}}:$HOME/WorkSpaces/Webs/$2:" /opt/homebrew/etc/nginx/servers/$1.conf
     else
-        sed  -i '' "s:{{root}}:$HOME/WorkSpaces/Webs/$1:" /opt/homebrew/etc/nginx/servers/$1.conf
+        sed -i '' "s:{{root}}:$HOME/WorkSpaces/Webs/$1:" /opt/homebrew/etc/nginx/servers/$1.conf
     fi
 
     if [ "$3" ]; then
-        sed  -i '' "s:{{phpv}}:php$3:" /opt/homebrew/etc/nginx/servers/$1.conf
+        sed -i '' "s:{{phpv}}:php$3:" /opt/homebrew/etc/nginx/servers/$1.conf
     else
-        sed  -i '' "s:{{phpv}}:php:" /opt/homebrew/etc/nginx/servers/$1.conf
+        sed -i '' "s:{{phpv}}:php:" /opt/homebrew/etc/nginx/servers/$1.conf
     fi
 
     vhostaddssl $1
@@ -72,77 +72,73 @@ function vhost() {
     nginx.restart
 
     code /opt/homebrew/etc/nginx/servers/$1.conf
- }
+}
 
- function vhostaddssl() {
+function vhostaddssl() {
 
-   sudo mkcert -key-file /opt/homebrew/etc/nginx/ssl/$1.key -cert-file /opt/homebrew/etc/nginx/ssl/$1.crt "$1.web" "*.$1.web"
+    sudo mkcert -key-file /opt/homebrew/etc/nginx/ssl/$1.key -cert-file /opt/homebrew/etc/nginx/ssl/$1.crt "$1.web" "*.$1.web"
 
     sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain /opt/homebrew/etc/nginx/ssl/$1.crt
- }
+}
 
- function vhoste() {
-     sudo code /opt/homebrew/etc/nginx/servers/$1.conf
- }
+function vhoste() {
+    sudo code /opt/homebrew/etc/nginx/servers/$1.conf
+}
 
- function vhostl() {
-     ls -ll /opt/homebrew/etc/nginx/servers/
- } 
+function vhostl() {
+    ls -ll /opt/homebrew/etc/nginx/servers/
+}
 
+function memp_help() {
+    # Display Help
 
+    echo "${boldgreen}MEMP Quick Command!${txtreset}"
+    echo
+    echo "${green}nginx.start${txtreset} _________ Start Nginx."
+    echo "${green}nginx.stop${txtreset} __________ Stop Nginx."
+    echo "${green}nginx.restart${txtreset} _______ Restart Nginx."
+    echo
+    echo "${green}php74.start${txtreset} _________ Start php7.4-fpm."
+    echo "${green}php74.stop${txtreset} __________ Stop  php7.4-fpm."
+    echo "${green}php74.restart${txtreset} _______ Restart  php7.4-fpm."
 
-function memp_help()
-{
-   # Display Help
-   
-   echo "${boldgreen}MEMP Quick Command!${txtreset}"
-   echo
-   echo "${green}nginx.start${txtreset} _________ Start Nginx."
-   echo "${green}nginx.stop${txtreset} __________ Stop Nginx."
-   echo "${green}nginx.restart${txtreset} _______ Restart Nginx."
-   echo
-   echo "${green}php74.start${txtreset} _________ Start php7.4-fpm."
-   echo "${green}php74.stop${txtreset} __________ Stop  php7.4-fpm."
-   echo "${green}php74.restart${txtreset} _______ Restart  php7.4-fpm."
+    echo
+    echo "${green}php80.start${txtreset} _________ Start php8.0-fpm."
+    echo "${green}php80.stop${txtreset} __________ Stop  php8.0-fpm."
+    echo "${green}php80.restart${txtreset} _______ Restart  php8.0-fpm."
 
-   echo
-   echo "${green}php80.start${txtreset} _________ Start php8.0-fpm."
-   echo "${green}php80.stop${txtreset} __________ Stop  php8.0-fpm."
-   echo "${green}php80.restart${txtreset} _______ Restart  php8.0-fpm."
+    echo
+    echo "${green}mysql.start${txtreset} _________ Start mysql."
+    echo "${green}mysql.stop${txtreset} __________ Stop mysql."
+    echo "${green}mysql.restart${txtreset} _______ Restart mysql."
 
-   echo
-   echo "${green}mysql.start${txtreset} _________ Start mysql."
-   echo "${green}mysql.stop${txtreset} __________ Stop mysql."
-   echo "${green}mysql.restart${txtreset} _______ Restart mysql."
+    echo
+    echo "${green}memp.start${txtreset} __________ Start Memp."
+    echo "${green}memp.stop${txtreset} ___________ Stop Memp."
+    echo "${green}memp.restart${txtreset} ________ Restart Memp."
 
-   echo
-   echo "${green}memp.start${txtreset} __________ Start Memp."
-   echo "${green}memp.stop${txtreset} ___________ Stop Memp."
-   echo "${green}memp.restart${txtreset} ________ Restart Memp."
+    echo
+    echo "${boldgreen}Syntax: ${green}phpv [php_version]${txtreset}"
+    echo "options:"
+    echo "${green}php_version${txtreset} _________ The version of php you want to change to(7.4 and 8.0)."
 
-   echo
-   echo "${boldgreen}Syntax: ${green}phpv [php_version]${txtreset}"
-   echo "options:"
-   echo "${green}php_version${txtreset} _________ The version of php you want to change to(7.4 and 8.0)."
-  
-   echo "${yellow}Example : Change to php@8.0 version!${txtreset}"
-   echo
-   echo "${boldgreen}phpv 8.0${txtreset}"
-   echo
+    echo "${yellow}Example : Change to php@8.0 version!${txtreset}"
+    echo
+    echo "${boldgreen}phpv 8.0${txtreset}"
+    echo
 
+    echo
+    echo "${boldgreen}Syntax: ${green} vhost [domain] [root] [php_version]${txtreset}"
+    echo "options:"
+    echo "${green}domain${txtreset} __________ Domain for local virtual host."
+    echo "${green}root${txtreset} ____________ Target for root dir in Wordspace/Webs (optional) ."
+    echo "${green}php_version${txtreset} _____ PHP version (optional) ."
 
-   echo
-   echo "${boldgreen}Syntax: ${green} vhost [domain] [root] [php_version]${txtreset}"
-   echo "options:"
-   echo "${green}domain${txtreset} __________ Domain for local virtual host."
-   echo "${green}root${txtreset} ____________ Target for root dir in Wordspace/Webs (optional) ."
-   echo "${green}php_version${txtreset} _____ PHP version (optional) ."
-  
-   echo "${yellow}Example : You want to make a domain like hxd.web${txtreset}"
-   echo "${yellow}          And root dir is $HOME/Wordspaces/Webs/laravel/public${txtreset}"
-   echo "${yellow}          And and php is version 8.0${txtreset}"
-   echo
-   echo "${boldgreen}vhost hxd laravel/public 8.0${txtreset}"
-   echo
-   echo
+    echo "${yellow}Example : You want to make a domain like hxd.web${txtreset}"
+    echo "${yellow}          And root dir is $HOME/WorkSpaces/Webs/laravel/public${txtreset}"
+    echo "${yellow}          And and php is version 8.0${txtreset}"
+    echo
+    echo "${boldgreen}vhost hxd laravel/public 8.0${txtreset}"
+    echo
+    echo
 }

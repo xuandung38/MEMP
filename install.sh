@@ -171,8 +171,7 @@ install_redis() {
     fi
 }
 
-config()
-{
+config() {
     
     echo "${yellow}Config local server.${txtreset}"
   
@@ -220,7 +219,7 @@ config()
 
     sudo cp $HOME/.zshrc $HOME/.zshrc.bak
 
-    sudo cat ./zsh.temp > $HOME/.zshrc
+    sudo cat ./zsh.temp >> $HOME/.zshrc
     sudo mkdir -p $HOME/WorkSpaces
     sudo chown $USER:staff $HOME/WorkSpaces
     sudo mkdir -p $HOME/WorkSpaces/Webs
