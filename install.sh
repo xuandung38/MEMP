@@ -30,7 +30,7 @@ install_dependencies() {
     else
         echo "${green}Homebrew are installed.${txtreset}"
     fi
-    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/it/.zprofile
+    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.zprofile
     eval "$(/opt/homebrew/bin/brew shellenv)"
     
     echo "${yellow}Update homebrew.${txtreset}"
@@ -216,15 +216,18 @@ config() {
     sudo brew services restart nginx
 
     echo "${boldgreen}Config ZSH!${txtreset}"
-
-    sudo cp $HOME/.zshrc $HOME/.zshrc.bak
+    
+    if [ -f "$HOME/.zshrc" ]; then
+        echo "Backup $HOME/.zshrc"
+        sudo cp $HOME/.zshrc $HOME/.zshrc.bak
+    fi
 
     sudo cat ./zsh.temp >> $HOME/.zshrc
     sudo mkdir -p $HOME/WorkSpaces
     sudo chown $USER:staff $HOME/WorkSpaces
     sudo mkdir -p $HOME/WorkSpaces/Webs
-    sudo chown $USER:staff $HOME/WorkSpaces/Web
-
+    sudo chown $USER:staff $HOME/WorkSpaces/Webs
+    ln -ls $HOME/WorkSpaces $HOME/Desktop
     echo "${boldgreen}Config local server done!${txtreset}"
 
 
