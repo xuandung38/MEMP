@@ -130,12 +130,13 @@ install_dnsmasq() {
         # Install dnsmasq
         echo "${yellow}Install dnsmasq.${txtreset}"
         brew install dnsmasq
-        sudo echo 'address=/.local/127.0.0.1' > /opt/homebrew/etc/dnsmasq.conf
+        sudo brew services start dnsmasq
+        sudo echo 'address=/.web/127.0.0.1' > /opt/homebrew/etc/dnsmasq.conf
         sudo mkdir -v /etc/resolver
-        sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/local'
+        sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/web'
         sudo echo "${boldgreen}Dnsmasq installed and running.${txtreset}"
 
-        sudo brew services start dnsmasq
+        sudo brew services restart dnsmasq
         
     else
         echo "${green}Dnsmasq already installed.${txtreset}"

@@ -131,7 +131,7 @@ function memp_help() {
     echo "${boldgreen}Syntax: ${green} vhost [domain] [root] [php_version]${txtreset}"
     echo "options:"
     echo "${green}domain${txtreset} __________ Domain for local virtual host."
-    echo "${green}root${txtreset} ____________ Target for root dir in Wordspace/Webs (optional) ."
+    echo "${green}root${txtreset} ____________ Target for root dir in $HOME/Sites (optional) ."
     echo "${green}php_version${txtreset} _____ PHP version (optional) ."
 
     echo "${yellow}Example : You want to make a domain like hxd.web${txtreset}"

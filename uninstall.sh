@@ -22,6 +22,6 @@ brew uninstall dnsmasq
 brew uninstall redis
 brew uninstall mysql
 sudo rm /opt/homebrew/etc/dnsmasq.conf
-sudo rm /etc/resolver/local
+sudo rm /etc/resolver/web
 
 echo "${boldgreen}Remove MEMP Success${txtreset}"

@@ -50,10 +50,10 @@ Note: Please enter password or use fingerprint (TouchID) to authenticate when re
 ~/Sites
 ```
 
-- Default domain is `.local`
+- Default domain is `.web`
 
 ```
-ex: hxd.local
+ex: hxd.web
 ```
 
 Thanks to @ronilaukkarinen for idea

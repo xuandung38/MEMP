@@ -7,7 +7,7 @@ server {
     ssl_ciphers          HIGH:!aNULL:!MD5;
     
     listen 80;
-    server_name {{host}}.local;
+    server_name {{host}}.web;
     root   {{root}};
 
     add_header X-Frame-Options "SAMEORIGIN";
