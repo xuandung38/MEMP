@@ -35,10 +35,26 @@ sudo chmod +x install.sh
 ```
 
 3 - Setup.
+
 ```
 ./install.sh
 ```
+
 Note: Please enter password or use fingerprint (TouchID) to authenticate when required to be able to install!
+
+## Infomations
+
+- Local Dir like mamp pro:
+
+```
+~/Sites
+```
+
+- Default domain is `.local`
+
+```
+ex: hxd.local
+```
 
 Thanks to @ronilaukkarinen for idea
 

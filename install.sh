@@ -130,9 +130,9 @@ install_dnsmasq() {
         # Install dnsmasq
         echo "${yellow}Install dnsmasq.${txtreset}"
         brew install dnsmasq
-        sudo echo 'address=/.web/127.0.0.1' > /opt/homebrew/etc/dnsmasq.conf
+        sudo echo 'address=/.local/127.0.0.1' > /opt/homebrew/etc/dnsmasq.conf
         sudo mkdir -v /etc/resolver
-        sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/web'
+        sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/local'
         sudo echo "${boldgreen}Dnsmasq installed and running.${txtreset}"
 
         sudo brew services start dnsmasq
@@ -223,17 +223,15 @@ config() {
     fi
 
     sudo cat ./zsh.temp >> $HOME/.zshrc
-    sudo mkdir -p $HOME/WorkSpaces
-    sudo chown $USER:staff $HOME/WorkSpaces
-    sudo mkdir -p $HOME/WorkSpaces/Webs
-    sudo chown $USER:staff $HOME/WorkSpaces/Webs
-    ln -ls $HOME/WorkSpaces $HOME/Desktop
+    sudo mkdir -p $HOME/Sites
+    sudo chown $USER:staff $HOME/Sites
+    ln -ls $HOME/Sites $HOME/Desktop
     echo "${boldgreen}Config local server done!${txtreset}"
 
 
     code /opt/homebrew/etc/nginx
 
-    open $HOME/WorkSpaces
+    open $HOME/Sites
 
     open https://localhost
 }
