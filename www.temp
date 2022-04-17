@@ -1,7 +1,7 @@
 [www]
 user = {{user}}
 group = staff
-listen = /opt/homebrew/var/run/php{{php_version}}-fpm/php{{php_version}}-fpm.sock;
+listen = /opt/homebrew/var/run/php{{php_version}}-fpm.sock;
 pm = dynamic
 pm.max_children = 5
 pm.start_servers = 2
