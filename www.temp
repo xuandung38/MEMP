@@ -1,7 +1,7 @@
 [www]
 user = {{user}}
 group = staff
-listen = 127.0.0.1:{{port}}
+listen = /opt/homebrew/var/run/php{{php_version}}-fpm/php{{php_version}}-fpm.sock;
 pm = dynamic
 pm.max_children = 5
 pm.start_servers = 2

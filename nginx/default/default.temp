@@ -29,7 +29,12 @@ server {
 
     error_page 404 /index.php;
         
-    include php/{{phpv}}.conf;
+    location ~ \.php$ {
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+        fastcgi_pass unix:/opt/homebrew/var/run/php{{php_version}}-fpm.sock;
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+    }
     
     location ~ /\.(?!well-known).* {
         deny all;

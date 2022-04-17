@@ -82,6 +82,7 @@ install_php() {
     brew tap shivammathur/php
     brew install shivammathur/php/php@7.4
     brew install shivammathur/php/php@8.0
+    brew install shivammathur/php/php@8.1
     brew unlink php
     brew link --overwrite --force php@7.4
 
@@ -89,13 +90,18 @@ install_php() {
     sudo cp ./www.temp /opt/homebrew/etc/php/7.4/php-fpm.d/www.conf
 
     sed -i '' "s:{{user}}:$USER:" /opt/homebrew/etc/php/7.4/php-fpm.d/www.conf
-    sed -i '' "s:{{port}}:9074:" /opt/homebrew/etc/php/7.4/php-fpm.d/www.conf
+    sed -i '' "s:{{php_version}}:7.4:" /opt/homebrew/etc/php/7.4/php-fpm.d/www.conf
     
 
     sudo cp ./www.temp /opt/homebrew/etc/php/8.0/php-fpm.d/www.conf
 
     sed -i '' "s:{{user}}:$USER:" /opt/homebrew/etc/php/8.0/php-fpm.d/www.conf
-    sed -i '' "s:{{port}}:9080:" /opt/homebrew/etc/php/8.0/php-fpm.d/www.conf
+    sed -i '' "s:{{php_version}}:8.0:" /opt/homebrew/etc/php/8.0/php-fpm.d/www.conf
+
+    sudo cp ./www.temp /opt/homebrew/etc/php/8.1/php-fpm.d/www.conf
+
+    sed -i '' "s:{{user}}:$USER:" /opt/homebrew/etc/php/8.1/php-fpm.d/www.conf
+    sed -i '' "s:{{php_version}}:8.1:" /opt/homebrew/etc/php/8.1/php-fpm.d/www.conf
 
     sudo killall php-fpm
 
@@ -110,6 +116,17 @@ xdebug.idekey=PHPSTORM
 ;xdebug.start_with_request = yes" >> "/opt/homebrew/etc/php/7.4/php.ini"
 
     brew link --overwrite --force php@8.0
+    pecl uninstall -r xdebug 
+    pecl install xdebug
+ 
+    sudo echo "
+[xdebug]
+xdebug.mode=debug
+xdebug.client_port=9003
+xdebug.idekey=PHPSTORM
+;xdebug.start_with_request = yes" >> "/opt/homebrew/etc/php/8.0/php.ini"
+
+    brew link --overwrite --force php@8.1
     pecl uninstall -r xdebug 
     pecl install xdebug
  
@@ -151,7 +168,7 @@ install_nginx() {
         echo "${yellow}Install nginx.${txtreset}"
         brew install nginx
 
-        sudo brew services start nginx
+        brew services start nginx
         echo "${boldgreen}Nginx installed and running.${txtreset}"
     else
         echo "${green}Nginx already installed.${txtreset}"
@@ -165,7 +182,7 @@ install_redis() {
         echo "${yellow}Install Redis.${txtreset}"
         brew install redis
 
-        sudo brew services start redis
+        brew services start redis
         echo "${boldgreen}Redis installed and running.${txtreset}"
     else
         echo "${green}Redis already installed.${txtreset}"
@@ -199,7 +216,6 @@ config() {
 
     sudo chmod -R 775 /opt/homebrew/etc/nginx
     sudo mkdir -p /opt/homebrew/etc/nginx/default
-    sudo mkdir -p /opt/homebrew/etc/nginx/php
     sudo mkdir -p /opt/homebrew/etc/nginx/servers
     sudo mkdir -p /opt/homebrew/etc/nginx/ssl
     

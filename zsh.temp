@@ -10,34 +10,38 @@ txtreset=$(tput sgr0)
 
 # Alias php versions
 
-alias php74="/opt/homebrew/opt/php@7.4/bin/php"
-
-alias php80="/opt/homebrew/opt/php@8.0/bin/php"
+export PATH="$(brew --prefix php@7.4)/bin:$PATH"
+export PATH="$(brew --prefix php@8.0)/bin:$PATH"
+export PATH="$(brew --prefix php@8.1)/bin:$PATH"
 
 # Alias restart services
 
-alias nginx.start='sudo brew services start nginx'
-alias nginx.stop='sudo brew services stop nginx'
-alias nginx.restart='sudo brew services restart nginx'
+alias nginx.start='brew services start nginx'
+alias nginx.stop='brew services stop nginx'
+alias nginx.restart='brew services restart nginx'
 
-alias dnsmasq.start='sudo brew services start dnsmasq'
-alias dnsmasq.stop='sudo brew services stop dnsmasq'
-alias dnsmasq.restart='sudo brew services restart dnsmasq'
+alias dnsmasq.start='brew services start dnsmasq'
+alias dnsmasq.stop='brew services stop dnsmasq'
+alias dnsmasq.restart='brew services restart dnsmasq'
 
 alias mysql.start='mysql.server start'
 alias mysql.stop='mysql.server stop'
 alias mysql.restart='mysql.server restart'
 
-alias php74.start='sudo brew services start php@7.4'
-alias php74.stop='sudo brew services stop php@7.4'
-alias php74.restart='sudo brew services restart php@7.4'
+alias php74.start='brew services start php@7.4'
+alias php74.stop='brew services stop php@7.4'
+alias php74.restart='brew services restart php@7.4'
 
-alias php8.start='sudo brew services start php@8.0'
-alias php8.stop='sudo brew services stop php@8.0'
-alias php8.restart='sudo brew services restart php@8.0'
+alias php80.start='brew services start php@8.0'
+alias php80.stop='brew services stop php@8.0'
+alias php80.restart='brew services restart php@8.0'
 
-alias memp.stop='mysql.stop && nginx.stop && php74.stop && php8.stop && dnsmasq.stop'
-alias memp.start='mysql.start && nginx.start && php74.start && php8.start && dnsmasq.start'
+alias php81.start='brew services start php@8.1'
+alias php81.stop='brew services stop php@8.1'
+alias php81.restart='brew services restart php@8.1'
+
+alias memp.stop='mysql.stop && nginx.stop && php74.stop && php80.stop && php81.stop && dnsmasq.stop'
+alias memp.start='mysql.start && nginx.start && php74.start && php80.start && php81.start && dnsmasq.start'
 alias memp.restart='memp.stop && memp.start'
 
 alias pa='php artisan'
@@ -62,9 +66,9 @@ function vhost() {
     fi
 
     if [ "$3" ]; then
-        sed -i '' "s:{{phpv}}:php$3:" /opt/homebrew/etc/nginx/servers/$1.conf
+        sed -i '' "s:{{php_version}}:$3:" /opt/homebrew/etc/nginx/servers/$1.conf
     else
-        sed -i '' "s:{{phpv}}:php:" /opt/homebrew/etc/nginx/servers/$1.conf
+        sed -i '' "s:{{php_version}}:8.0:" /opt/homebrew/etc/nginx/servers/$1.conf
     fi
 
     vhostaddssl $1
@@ -106,6 +110,11 @@ function memp_help() {
     echo "${green}php80.start${txtreset} _________ Start php8.0-fpm."
     echo "${green}php80.stop${txtreset} __________ Stop  php8.0-fpm."
     echo "${green}php80.restart${txtreset} _______ Restart  php8.0-fpm."
+
+    echo
+    echo "${green}php81.start${txtreset} _________ Start php8.0-fpm."
+    echo "${green}php81.stop${txtreset} __________ Stop  php8.0-fpm."
+    echo "${green}php81.restart${txtreset} _______ Restart  php8.0-fpm."
 
     echo
     echo "${green}mysql.start${txtreset} _________ Start mysql."
