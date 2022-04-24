@@ -8,11 +8,6 @@ yellow=$(tput setaf 3)
 green=$(tput setaf 2)
 txtreset=$(tput sgr0)
 
-# Alias php versions
-
-export PATH="$(brew --prefix php@7.4)/bin:$PATH"
-export PATH="$(brew --prefix php@8.0)/bin:$PATH"
-export PATH="$(brew --prefix php@8.1)/bin:$PATH"
 
 # Alias restart services
 
@@ -51,6 +46,9 @@ alias pa='php artisan'
 function phpv() {
     brew unlink php
     brew link --overwrite --force "php@$1"
+    # Alias php versions
+    export PATH="$(brew --prefix php@$1)/bin:$PATH"
+    
 }
 
 function vhost() {
