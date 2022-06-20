@@ -29,6 +29,7 @@ sudo rm -rf sudo rm -rf /opt/homebrew/Cellar/dnsmasq
 sudo rm -rf /opt/homebrew/Cellar/redis
 sudo rm -rf /opt/homebrew/etc/php
 sudo rm -rf /opt/homebrew/Cellar/nginx
+sed -i '' "s:source $HOME/memp.sh::" $HOME/.zshrc
 brew cleanup
 
 echo "${boldgreen}Remove MEMP Success${txtreset}"

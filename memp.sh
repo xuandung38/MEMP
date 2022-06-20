@@ -1,3 +1,5 @@
+#!/bin/bash
+
 export PATH="/opt/homebrew/opt/openssl@1.1/bin:$PATH"
 export PATH="$HOME/.composer/vendor/bin:$PATH"
 # Helpers:

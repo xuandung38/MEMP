@@ -239,7 +239,7 @@ config() {
         sudo cp $HOME/.zshrc $HOME/.zshrc.bak
     fi
 
-    sudo cat ./zsh.temp >> $HOME/.zshrc
+    sudo echo "source $HOME/memp.sh" >> $HOME/.zshrc
     sudo mkdir -p $HOME/Sites
     sudo chown $USER:staff $HOME/Sites
     ln -ls $HOME/Sites $HOME/Desktop
