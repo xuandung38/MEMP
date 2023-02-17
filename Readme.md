@@ -1,7 +1,7 @@
 ## MEMP with SSL for Macs with Apple silicon chips 
 
 ## Overview
-This script is written using the shell, in order to quickly deploy "LEMP" for Macs with Apple silicon chips (os: Bigsur, Monterey).
+This script is written using the shell, in order to quickly deploy "LEMP" for Macs with Apple silicon chips (os: Big Sur, Monterey also support Ventura).
 
 `M` - MacOS
 
